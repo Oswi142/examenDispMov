@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_exam/models/post_model.dart';
-import 'package:flutter_exam/models/post_service.dart';
+import 'package:flutter_exam/services/post_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,6 +41,12 @@ class _PostListPageState extends State<PostListPage> {
     });
   }
 
+  void _ratePost(Post post, int stars) {
+    setState(() {
+      post.rate(stars);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +57,47 @@ class _PostListPageState extends State<PostListPage> {
           ? ListView.builder(
               itemCount: _posts.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_posts[index].title),
-                  subtitle: Text(_posts[index].body),
+                return Card(
+                  child: ListTile(
+                    title: Text(_posts[index].title),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(_posts[index].body),
+                        SizedBox(height: 10),
+                        Text('Calificación: ${_posts[index].rating ?? "No calificado"}'),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.star),
+                              onPressed: () => _ratePost(_posts[index], 1),
+                              color: _posts[index].rating == 1 ? Colors.yellow : Colors.grey,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.star),
+                              onPressed: () => _ratePost(_posts[index], 2),
+                              color: _posts[index].rating == 2 ? Colors.yellow : Colors.grey,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.star),
+                              onPressed: () => _ratePost(_posts[index], 3),
+                              color: _posts[index].rating == 3 ? Colors.yellow : Colors.grey,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.star),
+                              onPressed: () => _ratePost(_posts[index], 4),
+                              color: _posts[index].rating == 4 ? Colors.yellow : Colors.grey,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.star),
+                              onPressed: () => _ratePost(_posts[index], 5),
+                              color: _posts[index].rating == 5 ? Colors.yellow : Colors.grey,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             )

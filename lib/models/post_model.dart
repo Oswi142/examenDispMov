@@ -16,4 +16,10 @@ class Post {
       rating: null,
     );
   }
+
+  void rate(int stars) {
+    if (stars >= 1 && stars <= 5) {
+      rating = stars;
+    }
+  }
 }
