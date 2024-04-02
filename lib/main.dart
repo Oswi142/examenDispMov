@@ -47,11 +47,24 @@ class _PostListPageState extends State<PostListPage> {
     });
   }
 
+  void _filterByTopRatedPosts() {
+    setState(() {
+      _posts.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
+      _posts = _posts.where((post) => post.rating == _posts.first.rating).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Posts'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: _filterByTopRatedPosts,
+          ),
+        ],
       ),
       body: _posts != null
           ? ListView.builder(
